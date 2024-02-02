@@ -3,7 +3,6 @@ package frc.robot.subsystems.drive;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.SPI;
-import frc.robot.subsystems.drive.SparkFlexOdometryThread;
 import java.util.Queue;
 
 public class GyroIONavX2 implements GyroIO {

@@ -64,35 +64,11 @@ public class ModuleIOSparkFlex implements ModuleIO {
     switch (index) {
       case 0:
         // front left
-        driveSparkFlex = new CANSparkFlex(FrontLeftDriveId, kBrushless);
-        turnSparkFlex = new CANSparkFlex(FrontLeftTurnId, kBrushless);
-        cancoder = new CANcoder(FrontLeftEncoderId);
+        driveSparkFlex = new CANSparkFlex(TestDriveId, kBrushless);
+        turnSparkFlex = new CANSparkFlex(TestTurnId, kBrushless);
+        cancoder = new CANcoder(TestEncoderId);
         absoluteEncoderOffset = new Rotation2d(1.723); // MUST BE CALIBRATED
-        positionName = "FrontLeft";
-        break;
-      case 1:
-        // front right
-        driveSparkFlex = new CANSparkFlex(FrontRightDriveId, kBrushless);
-        turnSparkFlex = new CANSparkFlex(FrontRightTurnId, kBrushless);
-        cancoder = new CANcoder(FrontRightEncoderId);
-        absoluteEncoderOffset = new Rotation2d(-0.693); // MUST BE CALIBRATED
-        positionName = "FrontRight";
-        break;
-      case 2:
-        // back left
-        driveSparkFlex = new CANSparkFlex(BackLeftDriveId, kBrushless);
-        turnSparkFlex = new CANSparkFlex(BackLeftTurnId, kBrushless);
-        cancoder = new CANcoder(BackLeftEncoderId);
-        absoluteEncoderOffset = new Rotation2d(0.674); // MUST BE CALIBRATED
-        positionName = "BackLeft";
-        break;
-      case 3:
-        // back right
-        driveSparkFlex = new CANSparkFlex(BackRightDriveId, kBrushless);
-        turnSparkFlex = new CANSparkFlex(BackRightTurnId, kBrushless);
-        cancoder = new CANcoder(BackRightEncoderId);
-        absoluteEncoderOffset = new Rotation2d(-0.766); // MUST BE CALIBRATED
-        positionName = "BackRight";
+        positionName = "Test";
         break;
       default:
         throw new RuntimeException("Invalid module index");
