@@ -15,9 +15,6 @@ package frc.robot.subsystems.drive;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -39,6 +36,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.LocalADStarAK;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -50,7 +49,7 @@ public class Drive extends SubsystemBase {
       Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
   private static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
 
-    public static final Lock odometryLock = new ReentrantLock();
+  public static final Lock odometryLock = new ReentrantLock();
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private final Module[] modules = new Module[4]; // FL, FR, BL, BR
@@ -68,9 +67,7 @@ public class Drive extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
-  public Drive(
-      GyroIO gyroIO,
-      ModuleIO testModuleIO) {
+  public Drive(GyroIO gyroIO, ModuleIO testModuleIO) {
     this.gyroIO = gyroIO;
     modules[0] = new Module(testModuleIO, 0);
     modules[1] = new Module(new ModuleIO() {}, 1);
@@ -176,7 +173,7 @@ public class Drive extends SubsystemBase {
 
     // Send setpoints to modules
     SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < modules.length; i++) {
       // The module returns the optimized state, useful for logging
       optimizedSetpointStates[i] = modules[i].runSetpoint(setpointStates[i]);
     }
@@ -184,6 +181,14 @@ public class Drive extends SubsystemBase {
     // Log setpoint states
     Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
     Logger.recordOutput("SwerveStates/SetpointsOptimized", optimizedSetpointStates);
+  }
+
+  /** Run the 1 real module attached for testing purposes */
+  public void runSingleModule(SwerveModuleState moduleState) {
+    SwerveModuleState optimizedSetpoint = modules[0].runSetpoint(moduleState);
+
+    Logger.recordOutput("SwerveStates/Testing/Setpoint", moduleState);
+    Logger.recordOutput("SwerveStates/Testing/SetpointOptimized", optimizedSetpoint);
   }
 
   /** Stops the drive. */
