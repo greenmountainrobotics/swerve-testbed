@@ -22,6 +22,26 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  
+  public static final class SwerveConstants {
+    public static final int FrontLeftDriveId = 12;
+    public static final int FrontLeftTurnId = 10;
+    public static final int FrontLeftEncoderId = 11;
+
+    public static final int FrontRightDriveId = 3;
+    public static final int FrontRightTurnId = 1;
+    public static final int FrontRightEncoderId = 2;
+
+    public static final int BackLeftDriveId = 9;
+    public static final int BackLeftTurnId = 7;
+    public static final int BackLeftEncoderId = 8;
+
+    public static final int BackRightDriveId = 6;
+    public static final int BackRightTurnId = 4;
+    public static final int BackRightEncoderId = 5;
+  }
+
+
   public static final Mode currentMode = Mode.REAL;
 
   public static enum Mode {
